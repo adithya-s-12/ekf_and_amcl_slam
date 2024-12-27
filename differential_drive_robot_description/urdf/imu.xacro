@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" >
+
+    <joint name="imu_joint" type="fixed">
+        <parent link="chassis"/>
+        <child link="imu_link"/>
+        <origin xyz="0 0 0.04" rpy="0 0 0"/>
+    </joint>
+
+    <link name="imu_link">
+        <visual>
+            <geometry>
+                <cylinder radius="0.04" length="0.03"/>
+            </geometry>
+            <material name="green"/>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder radius="0.04" length="0.03"/>
+            </geometry>
+        </collision>
+
+        <inertial>
+        <mass value="2.0"/>
+        <origin xyz="0.0 0 0.1" rpy=" 0 0 0"/>
+
+        <cylinder_inertia m="10" r="${chasis_cylinder_radius}" h="${chasis_cylinder_height}"/>
+
+        <inertia
+            ixx="0.5" ixy="0" ixz="0"
+            iyy="1.0" iyz="0"
+            izz="0.1"
+        />
+        </inertial>
+    </link>
+
+
+</robot>

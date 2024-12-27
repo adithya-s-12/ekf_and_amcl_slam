@@ -1,0 +1,141 @@
+<?xml version="1.0"?>
+<robot>
+
+  <!-- differential drive with wheel encoders -->
+  <gazebo>
+    <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
+      <legacyMode>false</legacyMode>
+      <alwaysOn>true</alwaysOn>
+      <updateRate>20</updateRate>
+      <leftJoint>left_wheel_hinge</leftJoint>
+      <rightJoint>right_wheel_hinge</rightJoint>
+      <wheelAcceleration>1.0</wheelAcceleration>
+      <wheelSeparation>0.4</wheelSeparation>
+      <wheelDiameter>0.1</wheelDiameter>
+      <torque>20</torque>
+      <commandTopic>cmd_vel</commandTopic>
+      <odometryTopic>odom</odometryTopic>
+      <odometryFrame>odom</odometryFrame>
+      <robotBaseFrame>chassis</robotBaseFrame>
+      <odometrySource>0</odometrySource>
+      <publishWheelTF>true</publishWheelTF>
+      <publishOdom>true</publishOdom>
+      <publishWheelJointState>true</publishWheelJointState>
+      <sensor_msgs>lidar</sensor_msgs>
+    </plugin>
+  </gazebo>
+
+  <gazebo reference="chassis">
+      <material>Gazebo/Blue</material>
+    </gazebo>
+
+  <gazebo reference="right_wheel">
+    <material>Gazebo/Black</material>
+  </gazebo>
+
+  <gazebo reference="left_wheel">
+    <material>Gazebo/Black</material>
+  </gazebo>
+
+<!-- lidar link -->
+
+  <gazebo reference="laser_frame">
+      <material>Gazebo/Red</material>
+
+      <sensor name="laser" type="ray">
+          <pose> 0 0 0 0 0 0 </pose>
+          <visualize>true</visualize>
+          <update_rate>10</update_rate>
+          <ray>
+              <scan>
+                  <horizontal>
+                      <samples>360</samples>
+                      <min_angle>-1.57</min_angle>
+                      <max_angle>1.57</max_angle>
+                  </horizontal>
+              </scan>
+              <range>
+                  <min>0.3</min>
+                  <max>12</max>
+              </range>
+          </ray>
+          <plugin name="laser_controller" filename="libgazebo_ros_laser.so">
+              <ros>
+                  <argument>~/out:=scan</argument>
+              </ros>
+              <topicName>/scan</topicName>
+              <output_type>sensor_msgs/LaserScan</output_type>
+              <frameName>laser_frame</frameName>
+          </plugin>
+      </sensor>
+  </gazebo>
+
+<!-- imu link -->
+  <gazebo reference="imu_link">
+    <material>Gazebo/Green</material>
+    <gravity>true</gravity>
+    <sensor name="imu_sensor" type="imu">
+      <always_on>true</always_on>
+      <update_rate>100</update_rate>
+      <visualize>true</visualize>
+      <topic>__default_topic__</topic>
+      <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+        <topicName>imu</topicName>
+        <bodyName>imu_link</bodyName>
+        <updateRateHZ>10.0</updateRateHZ>
+        <frameName>imu_link</frameName>
+        <initialOrientationAsReference>true</initialOrientationAsReference>
+      </plugin>
+      <pose>0 0 0 0 0 0</pose>
+    </sensor>
+  </gazebo>
+
+<!-- camera link -->
+
+  <!-- <gazebo reference="camera_link">
+      <material>Gazebo/Red</material>
+
+      <sensor name="camera" type="depth">
+          <pose> 0 0 0 0 0 0 </pose>
+          <visualize>true</visualize>
+          <update_rate>10</update_rate>
+          <camera>
+              <horizontal_fov>1.089</horizontal_fov>
+              <image>
+                  <format>R8G8B8</format>
+                  <width>640</width>
+                  <height>480</height>
+              </image>
+              <clip>
+                  <near>0.05</near>
+                  <far>8.0</far>
+              </clip>
+          </camera>
+          <plugin name="camera_controller" filename="libgazebo_ros_openni_kinect.so">
+            <baseline>0.2</baseline>
+            <alwaysOn>true</alwaysOn>
+            <updateRate>1.0</updateRate>
+            <cameraName>camera1</cameraName>
+            <imageTopicName>/color/image_raw</imageTopicName>
+            <cameraInfoTopicName>/color/camera_info</cameraInfoTopicName>
+            <depthImageTopicName>/depth/image_raw</depthImageTopicName>
+            <depthImageInfoTopicName>/depth/camera_info</depthImageInfoTopicName>
+            <pointCloudTopicName>/depth/points</pointCloudTopicName>
+            <frameName>camera_link</frameName>
+            <pointCloudCutoff>0.5</pointCloudCutoff>
+            <pointCloudCutoffMax>3.0</pointCloudCutoffMax>
+            <distortionK1>0.00000001</distortionK1>
+            <distortionK2>0.00000001</distortionK2>
+            <distortionK3>0.00000001</distortionK3>
+            <distortionT1>0.00000001</distortionT1>
+            <distortionT2>0.00000001</distortionT2>
+            <CxPrime>0</CxPrime>
+            <Cx>0</Cx>
+            <Cy>0</Cy>
+            <focalLength>0</focalLength>
+            <hackBaseline>0</hackBaseline>
+          </plugin>
+      </sensor>
+  </gazebo> -->
+
+</robot>

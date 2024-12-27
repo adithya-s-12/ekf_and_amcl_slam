@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <!-- differential_teleop_key already has its own built in velocity smoother -->
+  <node pkg="differential_drive_robot_control" type="mapping.py" name="mapping"  output="screen">
+  </node>
+</launch> 
