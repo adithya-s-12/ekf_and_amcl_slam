@@ -11,7 +11,6 @@ The implementation integrates motion control, sensor feedback, and state estimat
 - Localization on a known map using AMCL  
 - ROS2 launch files to orchestrate mapping and localization workflows
 
-## Repository Structure
 
 
 
